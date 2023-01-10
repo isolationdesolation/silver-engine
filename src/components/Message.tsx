@@ -10,8 +10,7 @@ const Message = (
 
   return (
     <div className="card">
-      <div>
-      <i className="bi bi-trash3-fill"></i>
+      <div className="reaction placeholder">
 
       </div>
       <div className="row">
