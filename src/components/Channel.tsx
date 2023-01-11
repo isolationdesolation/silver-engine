@@ -10,7 +10,7 @@ type ChannelProps = {
 };
 
 const Channel = () => {
-  const [messages, setMessages] = useState<any>([]);
+  const [messages, setMessages] = useState('');
   const [newMessage, setNewMessage] = useState("");
 
   // const { uid, displayName, photoURL } = user as User;
@@ -18,7 +18,7 @@ const Channel = () => {
   useEffect(() => {
     const chatMessages = localStorage.getItem('messages')
 
-    setMessages(chatMessages)
+    setMessages(chatMessages ?? '')
   }, []);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

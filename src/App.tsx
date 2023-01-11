@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import RoomPage from "./pages/RoomPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const [initializing, setInitializing] = useState(true);
@@ -13,6 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/" element={<HomePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="rooms/:id" element={<RoomPage />} />
       </Routes>
