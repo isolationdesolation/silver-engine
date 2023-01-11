@@ -8,15 +8,10 @@ const LoginPage = () => {
     setChatId(e.target.value);
   }
 
-  const navigate = useNavigate(); // Add this
+  const navigate = useNavigate(); 
 
   const joinRoom = () => {
-    // if (room !== '' && username !== '') {
-    //   socket.emit('join_room', { username, room });
-    // }
-
-    // Redirect to /chat
-    navigate(`/rooms/${chatId}`, { replace: true }); // Add this
+    navigate(`/rooms/${chatId}`, { replace: true }); 
   };
 
   return (
@@ -25,17 +20,22 @@ const LoginPage = () => {
         <h1>{`Chat`}</h1>
         <input className="form-control" placeholder="Your name" />
 
-        <select className="form-select" value={chatId} onChange={changeChatId}>
-          <option>-- Select Room --</option>
+        <div className="form-floating">
+        <select  id="chatSelect" className="form-select" value={chatId} onChange={changeChatId}>
           <option value="javascript">JavaScript</option>
           <option value="node">Node</option>
           <option value="express">Express</option>
           <option value="react">React</option>
         </select>
+        <label htmlFor="chatSelect">Select your fav instrument</label>
+        </div>
+        
+
 
         <button
           className="btn btn-secondary"
-          onClick={joinRoom} // Add this
+          onClick={joinRoom} 
+          disabled={!chatId}
         >
           Join Room
         </button>

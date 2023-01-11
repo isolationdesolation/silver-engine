@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"; // Add this
 const HomePage = () => {
   const navigate = useNavigate(); // Add this
 
-  const joinRoom = () => {
+  const toLogin = () => {
     navigate(`/login`, { replace: true }); // Add this
   };
 
@@ -13,7 +13,7 @@ const HomePage = () => {
       <div className="bblank">
         <button
           className="btn btn-secondary"
-          onClick={joinRoom} // Add this
+          onClick={toLogin} // Add this
         >
           To Login
         </button>

@@ -1,55 +1,59 @@
-
 import React, { useState, useEffect } from "react";
 import { MessageData, UserData } from "../const/types";
 import Message from "./Message";
 
-
-type ChannelProps = {
-  user: UserData;
-  db: any
-};
-
 const Channel = () => {
-  const [messages, setMessages] = useState('');
-  const [newMessage, setNewMessage] = useState("");
-
-  // const { uid, displayName, photoURL } = user as User;
+  const [messages, setMessages] = useState([{ text: "" }]);
+  const [newMessage, setNewMessage] = useState({ text: "" });
 
   useEffect(() => {
-    const chatMessages = localStorage.getItem('messages')
-
-    setMessages(chatMessages ?? '')
+    const chatMessages = localStorage.getItem("messages");
+    console.log(chatMessages);
+    if (chatMessages) {
+      setMessages(JSON.parse(chatMessages ?? ""));
+    }
   }, []);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewMessage(e.target.value);
+    setNewMessage({ text: e.target.value });
   };
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const trimmedMessage = newMessage.trim();
+    const trimmedMessage = newMessage.text.trim();
     if (trimmedMessage) {
-      const chatMessagesOld = localStorage.getItem('messages');
-      localStorage.setItem('messages',chatMessagesOld + newMessage)
-      setMessages(chatMessagesOld + newMessage)
+      let msgArr = JSON.parse(localStorage.getItem("messages"))
+        ? JSON.parse(localStorage.getItem("messages"))
+        : [];
+
+      console.log(msgArr);
+      msgArr.push(newMessage);
+      localStorage.setItem("messages", JSON.stringify(msgArr));
+      setMessages(msgArr);
     }
   };
 
   return (
     <>
       <div>
-        {messages}
+        {messages.map((item) => (
+          <li>{item.text}</li>
+        ))}
       </div>
 
       <form onSubmit={handleOnSubmit}>
         <textarea
-        className="form-control"
-          value={newMessage}
+          className="form-control"
+          value={newMessage.text}
           onChange={handleOnChange}
           placeholder="Let's talk"
         ></textarea>
-        <button type="submit" className="btn btn-success" disabled={!newMessage}>
+        <button
+          type="submit"
+          className="btn btn-success"
+          disabled={!newMessage.text}
+        >
           Send
         </button>
       </form>
