@@ -1,32 +1,22 @@
 import "./App.scss";
 import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import {Button} from "./components/Button";
-import Channel from "./components/Channel";
-import { handleError } from "./utils/error-handler";
-
-
+import LoginPage from "./pages/LoginPage";
+import RoomPage from "./pages/RoomPage";
 
 function App() {
   const [initializing, setInitializing] = useState(true);
 
-  useEffect(() => {
-   
-  }, [initializing]);
-
-
-
-
+  useEffect(() => {}, [initializing]);
 
   return (
-    <div>
-     
-        <>
-          <p>Welcome to the chat!</p>
-          <Channel  />
-        </>
-      
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="rooms/:id" element={<RoomPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

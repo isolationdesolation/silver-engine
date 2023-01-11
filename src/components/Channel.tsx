@@ -21,7 +21,7 @@ const Channel = () => {
     setMessages(chatMessages)
   }, []);
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewMessage(e.target.value);
   };
 
@@ -32,7 +32,7 @@ const Channel = () => {
     if (trimmedMessage) {
       const chatMessagesOld = localStorage.getItem('messages');
       localStorage.setItem('messages',chatMessagesOld + newMessage)
-
+      setMessages(chatMessagesOld + newMessage)
     }
   };
 
@@ -43,12 +43,12 @@ const Channel = () => {
       </div>
 
       <form onSubmit={handleOnSubmit}>
-        <input
-          type="text"
+        <textarea
+        className="form-control"
           value={newMessage}
           onChange={handleOnChange}
           placeholder="Let's talk"
-        />
+        ></textarea>
         <button type="submit" className="btn btn-success" disabled={!newMessage}>
           Send
         </button>
