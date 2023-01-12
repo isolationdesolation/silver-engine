@@ -4,7 +4,7 @@ import Channel from '../components/Channel';
 const RoomPage = () => {
     return (
     <>
-    <h1>Contact Me</h1>
+    <h1>Chat</h1>
         <Channel></Channel>
     </>
     );

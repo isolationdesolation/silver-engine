@@ -3,44 +3,60 @@ import { MessageData, UserData } from "../const/types";
 import Message from "./Message";
 
 const Channel = () => {
-  const [messages, setMessages] = useState([{ text: "" }]);
-  const [newMessage, setNewMessage] = useState({ text: "" });
+  const [messages, setMessages] = useState<MessageData[]>(
+    [],
+  );
+  const [newMessage, setNewMessage] = useState<{text: string}>({text: ""});
 
   useEffect(() => {
-    const chatMessages = localStorage.getItem("messages");
-    console.log(chatMessages);
+    const chatMessages = sessionStorage.getItem("messages");
     if (chatMessages) {
       setMessages(JSON.parse(chatMessages ?? ""));
     }
   }, []);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewMessage({ text: e.target.value });
+   
+    setNewMessage({
+      text: e.target.value 
+    });
   };
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    const id = new Date().valueOf()
+    const uid = sessionStorage.getItem('username') || ""
     const trimmedMessage = newMessage.text.trim();
+    const newMsg = {
+      text: trimmedMessage,
+      id,
+      uid
+    }
     if (trimmedMessage) {
-      let msgArr = JSON.parse(localStorage.getItem("messages"))
-        ? JSON.parse(localStorage.getItem("messages"))
-        : [];
-
-      console.log(msgArr);
-      msgArr.push(newMessage);
-      localStorage.setItem("messages", JSON.stringify(msgArr));
-      setMessages(msgArr);
+      let messagesHistory = JSON.stringify([])
+      if (sessionStorage.getItem("messages")) {
+        messagesHistory = sessionStorage.getItem("messages") as string
+      }
+      const parsedHistory = JSON.parse(messagesHistory)
+      const newHistory = [...parsedHistory, newMsg]
+      sessionStorage.setItem("messages", JSON.stringify(newHistory));
+      setMessages(newHistory);
+      setNewMessage({
+        text: ""
+      });
     }
   };
 
   return (
     <>
-      <div>
+      <ul className="list-group list-group-flush">
         {messages.map((item) => (
-          <li>{item.text}</li>
+          <li key={item.id} className="list-group-item">
+            {item.uid}<br/>
+            {item.text}
+          </li>
         ))}
-      </div>
+      </ul>
 
       <form onSubmit={handleOnSubmit}>
         <textarea
